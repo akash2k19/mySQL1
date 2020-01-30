@@ -208,3 +208,63 @@ insert into purchases values (
                              );
 
 select * from purchases;
+
+create table users(
+    user_id integer auto_increment primary key ,
+    fname varchar(1000) not null ,
+    lname varchar(1000) not null ,
+    email varchar(100) not null ,
+    username varchar(100) not null ,
+    password varchar(100) not null ,
+    city varchar(100) not null ,
+    state varchar(100) ,
+    zipcode varchar(100) ,
+    status varchar(100) not null
+);
+
+create table pet(
+    pet_id integer auto_increment primary key ,
+    name varchar(1000) not null ,
+    age integer not null ,
+    dob date ,
+    species varchar(1000) not null ,
+    breed varchar(1000) not null ,
+    size varchar(10000) not null ,
+    height integer,
+    weight integer not null
+);
+
+drop table adoption;
+
+create table adoption(
+    user_id integer,
+    pet_id integer,
+    application_start_dt date,
+    stage varchar(1000),
+    adoption_fee integer,
+    expected_adop_dt  date
+
+
+);
+
+insert into test1.pet(name, age, dob, species, breed, size, height, weight) VALUES
+('pink',10,'2017-6-6','dog','pomarian','small',2,6);
+
+insert into test1.pet(name, age, dob, species, breed, size, height, weight) VALUES
+('black',3,'2017-7-6','dog','pomarian','small',3,5);
+
+insert into test1.pet(name, age, dob, species, breed, size, height, weight) VALUES
+('white',7,'2017-6-8','dog','pomarian','large',6,9);
+
+
+
+insert into test1.adoption (user_id, pet_id, application_start_dt, stage, adoption_fee, expected_adop_dt) VALUES
+(1,1,'2019-11-11 11:11:11','applied',50,'2019-11-21 11:11:11');
+
+insert into adoption (user_id, pet_id, application_start_dt, stage, adoption_fee, expected_adop_dt) VALUES
+(2,2,'2019-11-11 11:11:11','completed',50,'2019-11-21 11:11:11');
+
+insert into test1.adoption (user_id, pet_id, application_start_dt, stage, adoption_fee, expected_adop_dt) VALUES
+(3,3,'2019-11-11 11:11:11','inprogress',50,'2019-11-21 11:11:11');
+
+select * from adoption;
