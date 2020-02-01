@@ -327,6 +327,8 @@ insert into product(productname,productline,buyprice)
 
 select distinct productline from test1.product;
 
+select * from test1.product;
+
 select productline , avg(buyprice) from test1.product group by productline;
 
 select productname,buyprice from test1.product p1 where buyprice > (
@@ -356,6 +358,14 @@ create table temp_employee(
     name varchar(100),
     start_time timestamp,
     end_time timestamp
+);
+select * from test1.temp_employee;
+
+
+create table temp_employee(
+    name varchar(100),
+salary int,
+department varchar(1000)
 );
 
 insert into test1.temp_employee(name, start_time, end_time) VALUES ('aakaash','2019-12-12 9:00:00', '2019-12-12 18:00:00');
@@ -402,6 +412,41 @@ fields terminated by ','
 enclosed by ' " '
 lines terminated by '/n';
 
+drop table test1.temp_employee;
+
+create table temp_employee(
+    id integer primary key ,
+    name varchar(100),
+    salary integer,
+    city varchar(100)
+);
+
+insert into test1.temp_employee(id, name, salary, city) VALUES (1,'aakaash',1000,'chennai');
 
 
 
+create table permanent_employee(
+    id integer primary key ,
+    name varchar(100),
+    salary integer,
+    city varchar(100)
+);
+
+insert into test1.permanent_employee(id, name, salary, city) VALUES (1,'akash',2000,'chennai');
+
+insert into test1.permanent_employee(id, name, salary, city) VALUES (2,'ash',3000,'bangalore');
+
+
+create view test1.all_employee as
+    select * from test1.temp_employee
+union
+select * from test1.permanent_employee;
+
+select * from all_employee;
+
+create view test1.all_employee_2 as
+    select city, max(salary)as max_salary
+from temp_employee, permanent_employee
+group by city;
+
+drop view all_employee_2;
