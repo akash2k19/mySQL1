@@ -333,3 +333,75 @@ select productname,buyprice from test1.product p1 where buyprice > (
     select  avg(buyprice) from test1.product p2 where p2.productline=p1.productline
     group by productline
     );
+
+
+
+
+create table  temp_employee(
+    name varchar(100),
+    allowance decimal(10,2),
+    salary int
+);
+
+insert into temp_employee(name, allowance, salary) VALUES ('aakaash',10,1000);
+
+insert into temp_employee(name, allowance, salary) VALUES ('aakaash2',22.31,2000);
+
+insert into temp_employee(name, allowance, salary) VALUES ('aakaash3',11.31,3000.10);
+
+
+drop table temp_employee;
+
+create table temp_employee(
+    name varchar(100),
+    start_time timestamp,
+    end_time timestamp
+);
+
+insert into test1.temp_employee(name, start_time, end_time) VALUES ('aakaash','2019-12-12 9:00:00', '2019-12-12 18:00:00');
+
+
+insert into test1.temp_employee(name, start_time, end_time) VALUES ('aakaash2','2019-12-12 10:00:00', '2019-12-12 17:00:00');
+
+insert into test1.temp_employee(name, start_time, end_time) VALUES ('aakaash3','2019-12-12 10:00:00', '2019-12-14 17:00:00');
+
+insert into test1.temp_employee(name, start_time, end_time) VALUES ('aakaash4','2019-11-12 10:00:00', '2019-12-24 17:00:00');
+
+
+
+select hour(timediff(start_time,end_time)) from test1.temp_employee;
+
+select name,end_time,hour(timediff(start_time,end_time)) as 'hours_worked' from test1.temp_employee;
+
+select name,end_time,timestampdiff(hour,start_time,end_time) as 'hours_worked'
+from test1.temp_employee;
+
+select name,start_time,end_time,timestampdiff(day ,start_time,end_time) as 'day_worked'
+from test1.temp_employee;
+
+select hour(timediff(start_time,end_time)) from test1.temp_employee;
+
+select name,start_time,end_time,timestampdiff(year ,start_time,end_time) as 'year_worked'
+from test1.temp_employee;
+
+drop table test1.temp_employee;
+
+create table temp_employee(
+    name varchar(100),
+    salary int,
+    city varchar(100)
+);
+
+set global local_infile = 1;
+
+show variables like "local_infile";
+
+load data local infile '/Users/aakaash/Downloads/salary.csv'
+into table test1.temp_employee
+fields terminated by ','
+enclosed by ' " '
+lines terminated by '/n';
+
+
+
+
