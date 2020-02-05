@@ -445,8 +445,81 @@ select * from test1.permanent_employee;
 select * from all_employee;
 
 create view test1.all_employee_2 as
-    select city, max(salary)as max_salary
+    select city, max(salary) as max_salary
 from temp_employee, permanent_employee
 group by city;
 
 drop view all_employee_2;
+
+create database test2;
+
+use test2;
+
+create table person (id integer not null , first_name varchar(1000)
+                    ,last_name varchar(1000),primary key (id));
+
+insert into  person values(1,'aakaash','T');
+
+insert into person (id, first_name, last_name) VALUES (2,'akash','T');
+
+insert into person (id, first_name, last_name) VALUES (3,'ash','T');
+
+alter table person add age integer not null ;
+desc person;
+
+alter table person drop column age;
+
+create table marks (name varchar(1000),mark integer);
+insert into marks values ('a',70);
+insert into marks values ('a',81);
+insert into marks values ('a',61);
+insert into marks values ('b',91);
+insert into marks values ('b',52);
+insert into marks values ('b',62);
+insert into marks values ('c',51);
+insert into marks values ('c',72);
+
+select name, sum(mark)from marks group by name;
+
+select name, avg(mark)from marks group by name;
+
+select name, max(mark)from marks group by name;
+
+select name, min(mark)from marks group by name;
+
+select name, bit_and(mark)from marks group by name;
+
+select name, bit_or(mark)from marks group by name;
+
+select name, count(mark)from marks group by name;
+
+select name, group_concat(mark)from marks group by name;
+
+select name, std(mark)from marks group by name;
+
+select name, stddev(mark)from marks group by name;
+
+select name, stddev_samp(mark)from marks group by name;
+
+select name, stddev_pop(mark)from marks group by name;
+
+select name, count(name) as cnt from marks group by name having cnt < 3;
+
+select name, count(*) as cnt from marks group by name having cnt < 3;
+
+select name, count(1) as cnt from marks group by name having cnt < 3;
+
+select name, min(mark) from marks group by name having min(mark) < 60;
+
+drop table marks_new;
+
+create table marks_new (student_name varchar(1000),score integer);
+
+insert into marks_new values ('ab',80);
+
+select * from marks union select * from marks_new;
+
+insert into marks_new values ('bb',94);
+
+select * from marks union all select *from marks_new;
+
