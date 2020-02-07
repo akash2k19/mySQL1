@@ -620,3 +620,97 @@ manager_id =all (select
     from staffs
     group by store_id)
 order by  first_name,last_name;
+
+
+
+show tables ;
+
+create table user(
+    user_id integer auto_increment primary key ,
+first_name varchar(1000) not null ,
+last_name varchar(1000) not null ,
+dob date,
+email varchar(1000) not null ,
+user_name varchar(1000) not null ,
+password varchar(1000) not null ,
+city varchar(100) not null ,
+state varchar(100),
+zipcode varchar(100),
+status varchar(100) not null
+);
+
+create table products(
+    product_id integer auto_increment primary key ,
+    name varchar(1000) not null ,
+    vendor varchar(1000) not null ,
+    quantity integer not null ,
+    cost integer not null ,
+    currency varchar(3) not null
+
+                     );
+
+create  table  purchases(
+    user_id integer not null ,
+    product_id integer not null ,
+    order_date datetime not null ,
+    delivery_date datetime,
+    primary key (user_id,product_id,order_date),
+    foreign key (user_id)
+    references user(user_id),
+    foreign key (product_id)
+    references products(product_id)
+
+);
+
+
+drop table purchases;
+
+insert into user(first_name, last_name, dob, email, user_name, password, city, state, zipcode, status)
+values ('aakaash','t','1999-05-25','aakaash@gmail.com','aakaash','aakaaash'
+,'chennai','tailnadu','1111','inprogress');
+
+insert into user(first_name, last_name, dob, email, user_name, password, city, state, zipcode, status)
+values ('akash','t','1999-05-25','akash@gmail.com','akash','akash'
+,'chennai','tailnadu','2222','approved');
+
+insert into user(first_name, last_name, dob, email, user_name, password, city, state, zipcode, status)
+values ('ash','t','1999-05-25','ash@gmail.com','ash','ash'
+,'chennai','tailnadu','1111','inprogress');
+
+select * from user;
+
+insert into products(name, vendor, quantity, cost, currency)
+values (
+'apple','chennai organic farming',10,50,'INR'
+                            );
+
+
+
+insert into products(name, vendor, quantity, cost, currency)
+values (
+'orange','flipkart',10,50,'INR'
+                            );
+
+
+insert into products(name, vendor, quantity, cost, currency)
+values (
+'grape','Amazon',10,50,'INR'
+                            );
+
+select * from products;
+
+insert into purchases values (
+                              1,1,'1999-06-25 11:11:11',null
+                             );
+
+insert into purchases values (
+                              2,2,'1999-06-25 11:11:11',null
+                             );
+
+delete from purchases where user_id=3 and product_id=3;
+
+insert into purchases values (
+                              3,3,'1999-06-25 11:11:11','1999-06-26 11:11:11'
+                             );
+
+select * from purchases;
