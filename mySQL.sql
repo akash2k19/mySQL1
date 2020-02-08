@@ -714,3 +714,80 @@ insert into purchases values (
                              );
 
 select * from purchases;
+
+
+
+create table employees(
+    first_name varchar(100),
+    last_name varchar(100),
+    office_code varchar(100),
+    salary int,
+    city varchar(100),
+    state varchar(100),
+    zip varchar(7)
+);
+
+insert into employees(first_name, last_name, office_code, salary, city, state, zip) VALUES
+('panda','white','CHN',2000,'chennai','tamilnadu','ZNO');
+
+
+insert into employees(first_name, last_name, office_code, salary, city, state, zip) VALUES
+('panda2','white2','BGN',3000,'bangalore','karnataka','ZNO');
+
+
+
+create  table offices(
+    office_code varchar(100) primary key ,
+    name varchar(200)
+);
+
+
+insert into offices(office_code, name) VALUES
+('CHN','chennai');
+
+
+
+select *
+from employees where office_code in (select office_code from offices);
+
+select *
+from employees where office_code not in (select office_code from offices);
+
+drop table product;
+
+create table product(
+    productname varchar(100) primary key ,
+    productline varchar(100) not null ,
+    buyprice int not null
+);
+
+insert into product(productname,productline,buyprice)
+ values ('baby shirt','baby',100);
+
+insert into product(productname,productline,buyprice)
+ values ('baby pant','baby',150);
+
+insert into product(productname,productline,buyprice)
+ values ('adult shirt','adult',100);
+
+insert into product(productname,productline,buyprice)
+ values ('adult pant','adult',150);
+
+select distinct productline
+from test2.product;
+
+select * from test2.product;
+
+select productline , avg(buyprice)
+from test2.product group by productline;
+
+select productname,buyprice from test2.product p1 where buyprice > (
+    select  avg(buyprice) from test2.product p2
+    where p2.productline=p1.productline
+    group by productline
+    );
+
+select * from test2.employees
+where exists(select *
+    from  test2.offices
+    where offices.office_code = 'CHN');
