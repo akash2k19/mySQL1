@@ -791,3 +791,104 @@ select * from test2.employees
 where exists(select *
     from  test2.offices
     where offices.office_code = 'CHN');
+
+
+
+create table  temp_employee(
+    name varchar(100),
+    allowance decimal(10,2),
+    salary int
+);
+
+insert into temp_employee(name, allowance, salary) VALUES ('akash',10,1000);
+
+insert into temp_employee(name, allowance, salary) VALUES ('akash2',22.31,2000);
+
+insert into temp_employee(name, allowance, salary) VALUES ('akash3',11.31,3000.10);
+
+
+
+create table temp2_employee(
+    name varchar(100),
+    start_time timestamp,
+    end_time timestamp
+);
+select * from test2.temp2_employee;
+
+
+
+
+insert into test2.temp2_employee(name, start_time, end_time)
+ VALUES ('aakaash','2019-12-12 9:00:00', '2019-12-12 18:00:00');
+
+
+insert into test2.temp2_employee(name, start_time, end_time)
+VALUES ('aakaash2','2019-12-12 10:00:00', '2019-12-12 17:00:00');
+
+insert into test2.temp2_employee(name, start_time, end_time)
+ VALUES ('aakaash3','2019-12-12 10:00:00', '2019-12-14 17:00:00');
+
+insert into test2.temp2_employee(name, start_time, end_time)
+ VALUES ('aakaash4','2019-11-12 10:00:00', '2019-12-24 17:00:00');
+
+
+
+select hour(timediff(start_time,end_time)) from test2.temp2_employee;
+
+select name,end_time,hour(timediff(start_time,end_time)) as 'hours_worked'
+from test2.temp2_employee;
+
+select name,end_time,timestampdiff(hour,start_time,end_time) as 'hours_worked'
+from test2.temp2_employee;
+
+select name,start_time,end_time,timestampdiff(day ,start_time,end_time) as 'day_worked'
+from test2.temp2_employee;
+
+select hour(timediff(start_time,end_time)) from test2.temp2_employee;
+
+select name,start_time,end_time,timestampdiff(year ,start_time,end_time) as 'year_worked'
+from test2.temp2_employee;
+
+
+
+
+create table temp3_employee(
+    id integer primary key ,
+    name varchar(100),
+    salary integer,
+    city varchar(100)
+);
+
+insert into test2.temp3_employee(id, name, salary, city)
+ VALUES (1,'aakaash',1000,'chennai');
+
+
+
+create table permanent_employee(
+    id integer primary key ,
+    name varchar(100),
+    salary integer,
+    city varchar(100)
+);
+
+insert into test2.permanent_employee(id, name, salary, city)
+ VALUES (1,'akash',2000,'chennai');
+
+insert into test2.permanent_employee(id, name, salary, city)
+ VALUES (2,'ash',3000,'bangalore');
+
+
+create view all_employee as
+    select id,name,salary,city from temp3_employee
+union
+select id,name,salary,city from permanent_employee;
+
+select * from all_employee;
+
+create view all_employee_1 as
+    select city,max(salary) as max_salary
+from permanent_employee
+group by city;
+
+select * from all_employee_1;
+
